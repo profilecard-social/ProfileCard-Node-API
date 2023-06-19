@@ -1,8 +1,9 @@
 {
+    "default_status": "Hey there I am using profilecard!",
     "mysql": {
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "pixelmesomething"
+        "database": "profilecard"
     }
 }

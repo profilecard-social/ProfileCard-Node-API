@@ -1,7 +1,19 @@
 {
+  "name": "profilecard-socket-api",
+  "type": "module",
+  "scripts": {
+    "build": "babel src -d lib",
+    "start": "node --use_strict ./src/Server.js",
+    "watch": "nodemon --exec \"npm run build && node src/Server.js\" -e js --ignore lib/"
+  },
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "locutus": "^2.0.16",
     "md5": "^2.3.0",
     "mysql": "^2.18.1",
     "socket.io": "^4.6.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
   }
 }
