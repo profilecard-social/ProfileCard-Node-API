@@ -5,8 +5,6 @@ import {updateUserParam} from "../db/UserUpdates.js";
 
 export default async (socket, body, callback) => {
 
-    console.log("a")
-
     if (!body.token) {
         fail(callback, Codes.InvalidToken);
         return;
