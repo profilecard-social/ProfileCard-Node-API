@@ -1,5 +1,7 @@
 {
     "default_status": "Hey there I am using profilecard!",
+    "upload_directory": "uploads",
+    "access_path": "https://pfcard.link/",
     "mysql": {
         "host": "localhost",
         "user": "root",

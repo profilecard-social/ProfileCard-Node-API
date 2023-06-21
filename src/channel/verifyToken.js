@@ -1,0 +1,23 @@
+import {getUsersWithToken} from "../db/UserQueries.js";
+import Codes from "../response/Codes.js";
+import {fail, success} from "../response/Response.js";
+import {updateUserParam} from "../db/UserUpdates.js";
+
+export default async (socket, body, callback) => {
+
+    if (!body.token) {
+        fail(callback, Codes.InvalidToken);
+        return;
+    }
+
+    const usersWithToken = await getUsersWithToken(body.token);
+
+    if (usersWithToken <= 0) {
+        fail(callback, Codes.InvalidToken);
+        return;
+    }
+
+    success(callback, Codes.Success);
+    // updateUserParam("token", body.token, "last_seen_at", ) TODO: GET RIGHT VALUE BACKEND USES
+
+}

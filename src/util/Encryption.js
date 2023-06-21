@@ -1,12 +1,20 @@
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 
+export function generateNewToken() {
+    return binToHex(generateRandomBytes(50))
+}
+
 export function generateRandomBytes(length) {
     return crypto.randomBytes(length)
 }
 
 export function generatePasswordHash(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+}
+
+export function comparePassword(plainPasword, hash) {
+    return bcrypt.compareSync(plainPasword, hash);
 }
 
 export function binToHex(bytes) {

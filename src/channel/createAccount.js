@@ -2,16 +2,16 @@ import {getUsersWithEmail, getUsersWithName} from "../db/UserQueries.js";
 import {fail, success} from "../response/Response.js";
 import Codes from "../response/Codes.js";
 import {getPunishments} from "../db/PunishmentQuerries.js";
-import {binToHex, generatePasswordHash, generateRandomBytes} from "../util/Encryption.js";
+import {binToHex, generateNewToken, generatePasswordHash, generateRandomBytes} from "../util/Encryption.js";
 import {createUser, updateUserParam} from "../db/UserUpdates.js";
 import {ctype_alnum} from "locutus/php/ctype/index.js";
 import config from "../../config.json" assert { type: "json" };
 
-export default async (socket, msg, callback) => {
+export default async (socket, body, callback) => {
 
-    const email = msg.email;
-    const password = msg.password;
-    const username = msg.username;
+    const email = body.email;
+    const password = body.password;
+    const username = body.username;
 
     if (!email || !password || !username) {
         fail(callback, Codes.InsufficientCredentials);
@@ -38,7 +38,7 @@ export default async (socket, msg, callback) => {
         return;
     }
 
-    let token = binToHex(generateRandomBytes(50));
+    let token = generateNewToken();
     let passwordHash = generatePasswordHash(password);
 
     await createUser(username, email, token, passwordHash, config.default_status, callback);
