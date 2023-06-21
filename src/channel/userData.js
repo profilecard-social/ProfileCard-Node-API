@@ -32,11 +32,11 @@ export default async (socket, body, callback) => {
     let profilePicture;
 
     if (fs.existsSync(profilePicturePath)) {
-        profilePicture = `${uploadDirectory}/${nameHash}.png`;
+        profilePicture = `${accessPath}/${nameHash}.png`;
     } else if (fs.existsSync(`${uploadDirectory}/${user.id}.png`)) {
-        profilePicture = `${uploadDirectory}/${user.id}.png`;
+        profilePicture = `${accessPath}/${user.id}.png`;
     } else {
-        profilePicture = `${uploadDirectory}/default.png`;
+        profilePicture = `${accessPath}/default.png`;
     }
 
     const data = {
