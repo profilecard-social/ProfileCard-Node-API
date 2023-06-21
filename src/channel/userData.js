@@ -40,7 +40,7 @@ export default async (socket, body, callback) => {
     }
 
     const data = {
-        "icon": `${accessPath}${profilePicture}`
+        "icon": `${profilePicture}`
     };
 
     const dataToTransfer = [ "name", "email", "status", "buttoncolor", "textcolor", "bgcolor", "theme", "lang", "last_seen_at", "icon" ];
