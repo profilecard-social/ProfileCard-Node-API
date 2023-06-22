@@ -17,18 +17,18 @@ export default async (socket, body, callback) => {
         return;
     }
 
-    var user = usersWithToken[0];
+    const user = usersWithToken[0];
 
-    var links = getLinksByUsername(user[0].name);
+    const links = await getLinksByUsername(user[0].name);
 
     const data = []
 
-    for (let link in links) {
-        const link = {
+    for (let link of links) {
+        const linkObj = {
             name: link.name,
             url: link.url
-        }
-        data.push(link);
+        };
+        data.push(linkObj);
     }
 
     success(callback, { body: { links: data } });
