@@ -19,7 +19,7 @@ export default async (socket, body, callback) => {
 
     const user = usersWithToken[0];
 
-    const links = await getLinksByUsername(user[0].name);
+    const links = await getLinksByUsername(user.name);
 
     const data = []
 
