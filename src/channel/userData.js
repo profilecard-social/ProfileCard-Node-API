@@ -24,7 +24,7 @@ export default async (socket, body, callback) => {
         return;
     }
 
-    var user = usersWithToken[0];
+    const user = usersWithToken[0];
 
     const nameHash = md5(user.name.toLowerCase());
     const profilePicturePath = `${uploadDirectory}/${nameHash}.png`;
