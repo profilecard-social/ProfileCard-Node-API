@@ -26,6 +26,7 @@ export default async (socket, body, callback) => {
     for (let link of links) {
         const linkObj = {
             id: link.id,
+            sortId: link.sort_id,
             name: link.name,
             url: link.url
         };
