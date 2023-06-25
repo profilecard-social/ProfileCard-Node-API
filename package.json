@@ -5,7 +5,7 @@
     "devstart": "node --use-strict ./src/Server.js",
     "serverstart": "pm2 start ./src/Server.js --name js-api",
     "serverstop": "pm2 stop js-api",
-    "serverrestart": "pm2 stop js-api",
+    "serverrestart": "pm2 restart js-api",
     "serverdelete": "pm2 delete js-api"
   },
   "dependencies": {
