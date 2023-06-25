@@ -18,6 +18,6 @@ export default async (socket, body, callback) => {
     }
 
     success(callback, Codes.Success);
-    // updateUserParam("token", body.token, "last_seen_at", ) TODO: GET RIGHT VALUE BACKEND USES
 
+    await updateUserParam("token", body.token, "last_seen_at", Math.floor(Date.now() / 1000))
 }
