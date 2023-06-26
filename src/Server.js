@@ -16,6 +16,7 @@ import invalidateToken from "./channel/invalidateToken.js";
 // Config loading
 import config from "../config.json" assert { type: "json" };
 import getLinks from "./channel/getLinks.js";
+import modifyLink from "./channel/modifyLink.js";
 
 // Init database
 export const mysql = createConnection(config.mysql);
@@ -49,6 +50,7 @@ io.on('connect', socket => {
   socket.on('verifyToken', (body, callback) => verifyToken(socket, body, callback));
   socket.on('userData', (body, callback) => userData(socket, body, callback));
   socket.on('getLinks', (body, callback) => getLinks(socket, body, callback));
+  socket.on('modifyLink', (body, callback) => modifyLink(socket, body, callback));
   socket.on('updateValue', (body, callback) => updateValue(socket, body, callback));
   socket.on('invalidateToken', (body, callback) => invalidateToken(socket, body, callback));
   socket.on('updatePassword', (body, callback) => updatePassword(socket, body, callback));
