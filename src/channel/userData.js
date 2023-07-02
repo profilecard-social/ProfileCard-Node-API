@@ -28,8 +28,10 @@ export default async (socket, body, callback) => {
 
     const nameHash = md5(user.name.toLowerCase());
     const profilePicturePath = `${uploadDirectory}/${nameHash}.png`;
+    const backgroundImagePath = `${uploadDirectory}/bg_${nameHash}.png`;
 
     let profilePicture;
+    let backgroundImage
 
     if (fs.existsSync(profilePicturePath)) {
         profilePicture = `${accessPath}/${nameHash}.png`;
@@ -39,11 +41,18 @@ export default async (socket, body, callback) => {
         profilePicture = `${accessPath}/default.png`;
     }
 
+    if (fs.existsSync(backgroundImagePath)) {
+        backgroundImage = `${accessPath}/bg_${nameHash}.png`;
+    }  else {
+        backgroundImage = `${accessPath}/bg_default.png`;;
+    }
+
     const data = {
-        "icon": `${profilePicture}`
+        "icon": `${profilePicture}`,
+        "bgImage": `${backgroundImage}`,
     };
 
-    const dataToTransfer = [ "name", "email", "status", "buttoncolor", "textcolor", "bgcolor", "theme", "lang", "last_seen_at", "icon" ];
+    const dataToTransfer = [ "name", "email", "status", "buttoncolor", "textcolor", "bgcolor", "theme", "lang", "last_seen_at", "icon", "bgImage" ];
     for (let [key, value] of Object.entries(user)) {
         if (dataToTransfer.includes(key)) {
             data[key] = value;
