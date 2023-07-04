@@ -1,6 +1,7 @@
 import {mysql} from "../Server.js";
 import {fail} from "../response/Response.js";
 import Codes from "../response/Codes.js";
+import {getHighestSortIdByUsername} from "./LinkQuerries.js";
 
 export async function updateLinkByUsername(username, id, sortId, name, url, callback = () => {}) {
     return new Promise((resolve, reject) => {
@@ -19,16 +20,23 @@ export async function updateLinkByUsername(username, id, sortId, name, url, call
 
 export async function createLink(username, name, url, callback = () => {}) {
     return new Promise((resolve, reject) => {
-        mysql.query(`INSERT INTO links (username, name, url, prevOwner) VALUES (?, ?, ?, ?)`, [username, name, url, username], function (err) {
-            if (err) {
-                reject(err)
-                console.error(err);
-                fail(callback, Codes.ServerError);
-                return;
-            }
+        mysql.query(
+            `INSERT INTO links (username, name, url, prevOwner, sort_id)
+       SELECT ?, ?, ?, ?, MAX(sort_id) + 1
+       FROM links
+       WHERE username = ?`,
+            [username, name, url, username, username],
+            function (err) {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                    fail(callback, Codes.ServerError);
+                    return;
+                }
 
-            resolve();
-        })
+                resolve();
+            }
+        );
     });
 }
 
