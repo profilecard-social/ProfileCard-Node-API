@@ -44,7 +44,7 @@ export default async (socket, body, callback) => {
     if (fs.existsSync(backgroundImagePath)) {
         backgroundImage = `${accessPath}/bg_${nameHash}.png`;
     }  else {
-        backgroundImage = `${accessPath}/bg_default.png`;;
+        backgroundImage = `${accessPath}/bg_default.png`;
     }
 
     const data = {

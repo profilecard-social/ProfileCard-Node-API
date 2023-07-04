@@ -19,7 +19,7 @@ export async function updateLinkByUsername(username, id, sortId, name, url, call
 
 export async function createLink(username, name, url, callback = () => {}) {
     return new Promise((resolve, reject) => {
-        mysql.query(`INSERT INTO links (username, name, url, prevOwner) VALUES (?, ?, ?)`, [username, name, url, username], function (err) {
+        mysql.query(`INSERT INTO links (username, name, url, prevOwner) VALUES (?, ?, ?, ?)`, [username, name, url, username], function (err) {
             if (err) {
                 reject(err)
                 console.error(err);
