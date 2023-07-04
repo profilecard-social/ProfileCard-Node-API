@@ -1,7 +1,6 @@
 import {mysql} from "../Server.js";
 import {fail} from "../response/Response.js";
 import Codes from "../response/Codes.js";
-import {getHighestSortIdByUsername} from "./LinkQuerries.js";
 
 export async function updateLinkByUsername(username, id, sortId, name, url, callback = () => {}) {
     return new Promise((resolve, reject) => {
