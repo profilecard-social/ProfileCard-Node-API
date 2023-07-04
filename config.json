@@ -6,6 +6,7 @@
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "profilecard"
+        "database": "profilecard",
+        "charset": "utf8mb4"
     }
 }
