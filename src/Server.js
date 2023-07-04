@@ -13,6 +13,7 @@ import getRememberToken from "./channel/getRememberToken.js";
 import updatePassword from "./channel/updatePassword.js";
 import invalidateToken from "./channel/invalidateToken.js";
 import setBackgroundImage from "./channel/setBackgroundImage.js";
+import removeBackgroundImage from "./channel/removeBackgroundImage.js";
 
 // Config loading
 import config from "../config.json" assert { type: "json" };
@@ -57,6 +58,7 @@ io.on('connect', socket => {
   socket.on('updatePassword', (body, callback) => updatePassword(socket, body, callback));
   socket.on('setProfilePicture', (body, callback) => profilePicture(socket, body, callback));
   socket.on('setBackgroundImage', (body, callback) => setBackgroundImage(socket, body, callback));
+  socket.on('removeBackgroundImage', (body, callback) => removeBackgroundImage(socket, body, callback));
 
 });
 
