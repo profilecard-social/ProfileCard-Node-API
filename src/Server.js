@@ -1,7 +1,7 @@
 // Import libraries
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { createConnection, createPool } from 'mysql2';
+import { createPool } from 'mysql2';
 
 // Import api modules
 import profilePicture from "./channel/setProfilePicture.js";
