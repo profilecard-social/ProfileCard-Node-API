@@ -7,6 +7,8 @@
         "user": "root",
         "password": "",
         "database": "profilecard",
-        "charset": "utf8mb4"
+        "charset": "utf8mb4",
+        "enableKeepAlive": true,
+        "keepAliveInitialDelay": 0
     }
 }

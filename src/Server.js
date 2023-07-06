@@ -1,7 +1,7 @@
 // Import libraries
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { createConnection } from 'mysql2';
+import { createConnection, createPool } from 'mysql2';
 
 // Import api modules
 import profilePicture from "./channel/setProfilePicture.js";
@@ -21,15 +21,7 @@ import getLinks from "./channel/getLinks.js";
 import modifyLink from "./channel/modifyLink.js";
 
 // Init database
-export const mysql = createConnection(config.mysql);
-
-mysql.connect(err => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  console.log('MySQL has been connected.');
-});
+export const mysql = createPool(config.mysql);
 
 // Init socket server
 const httpServer = createServer();
