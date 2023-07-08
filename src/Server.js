@@ -1,7 +1,7 @@
-// Import libraries
-import { createServer } from "http";
+import { createServer } from "https";
 import { Server } from "socket.io";
 import { createPool } from 'mysql2';
+import fs from 'fs';
 
 // Import api modules
 import profilePicture from "./channel/setProfilePicture.js";
@@ -23,9 +23,14 @@ import modifyLink from "./channel/modifyLink.js";
 // Init database
 export const mysql = createPool(config.mysql);
 
+// Read SSL certificates
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/beta.pfcard.link/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/beta.pfcard.link/fullchain.pem', 'utf8');
+const credentials = { key: privateKey, cert: certificate };
+
 // Init socket server
-const httpServer = createServer();
-const io = new Server(httpServer, {
+const httpsServer = createServer(credentials);
+const io = new Server(httpsServer, {
   cors: {
     origin: '*',
   }
@@ -54,6 +59,6 @@ io.on('connect', socket => {
 
 });
 
-io.listen(4251, () => {
-  console.log('Socket.IO server started');
+httpsServer.listen(4251, () => {
+  console.log('Socket.IO server started with SSL');
 });
