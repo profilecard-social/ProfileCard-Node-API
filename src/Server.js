@@ -33,7 +33,8 @@ const httpsServer = createServer(credentials);
 const io = new Server(httpsServer, {
   cors: {
     origin: '*',
-  }
+  },
+  maxHttpBufferSize: 100 * 1024 * 1024,
 });
 
 // Init socket.io channels
