@@ -1,8 +1,8 @@
 import fs from "fs";
 import md5 from "md5";
-import {getUsersWithToken} from "../db/UserQueries.js";
+import { getUsersWithToken } from "../db/UserQueries.js";
 import Codes from "../response/Codes.js";
-import {fail, success} from "../response/Response.js";
+import { fail, success } from "../response/Response.js";
 
 import config from "../../config.json" assert { type: "json" };
 
@@ -23,16 +23,16 @@ export default async (socket, body, callback) => {
     }
     const user = usersWithToken[0];
     const username = user.name;
-
-    fs.unlink(`${documentRoot}/bg_${md5(username.toLowerCase())}.png`, imageFile, err => {
+    fs.unlink(`${documentRoot}/bg_${md5(username.toLowerCase())}.png`, err => {
         if (err) {
-            fail(callback, Codes.ServerError)
+            fail(callback, Codes.ServerError);
             console.error(err);
             return;
         }
 
-        success(callback, Codes.Success)
+        success(callback, Codes.Success);
     });
+
 
 }
 
