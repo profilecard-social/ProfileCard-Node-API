@@ -24,14 +24,6 @@ export default async (socket, body, callback) => {
     const user = usersWithToken[0];
     const username = user.name;
 
-    if (!body.image) {
-        fail(callback, Codes.ServerError)
-        return;
-    }
-
-    const imageData = body.image;
-    const imageFile = Buffer.from(imageData, 'base64');
-
     fs.unlink(`${documentRoot}/bg_${md5(username.toLowerCase())}.png`, imageFile, err => {
         if (err) {
             fail(callback, Codes.ServerError)
