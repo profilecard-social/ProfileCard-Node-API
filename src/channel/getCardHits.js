@@ -1,37 +1,137 @@
 import {fail, success} from "../response/Response.js";
 import Codes from "../response/Codes.js";
-import {getUsersWithToken} from "../db/UserQueries.js";
 import { getCardHitsByID } from "../db/CardHitQuerries.js";
 
 export default async (socket, body, callback) => {
+    authedChannel(socket, body, callback, async (user) => {
 
-    if (!body.token) {
-        fail(callback, Codes.InvalidToken);
-        return;
-    }
+        if (!body.timespan && !body.user_id) {
+            fail(callback, Codes.ServerError)
+            return;
+        }
 
-    const usersWithToken = await getUsersWithToken(body.token);
+        let timespan = body.timespan;
+        let user_id = body.user_id;
 
-    if (usersWithToken <= 0) {
-        fail(callback, Codes.InvalidToken);
-        return;
-    }
+        switch (timespan) {
+            case 'today': {
 
-    const user = usersWithToken[0];
+                const hits = await getCardHitsByID(user_id, 'today');
+                const data = []
+            
+                for (let hit of hits) {
+                    const hitObj = {
+                        id: hit.id,
+                        user_id: hit.user_id,
+                        hashed_ip: hit.hashed_ip,
+                        created_at: hit.created_at
+                    };
+                    data.push(hitObj);
+                }
+            
+                success(callback, { body: { hits: data } });
 
-    const cardhits = await getCardHitsByID(user.id);
+                break;
+            }
 
-    const data = []
+            case 'last_24_hours': {
 
-    for (let hit of cardhits) {
-        const hitObj = {
-            id: hit.id,
-            user_id: hit.user_id,
-            hashed_ip: hit.hashed_ip,
-            created_at: hit.created_at
-        };
-        data.push(hitObj);
-    }
+                const hits = await getCardHitsByID(user_id, 'last_24_hours');
+                const data = []
+            
+                for (let hit of hits) {
+                    const hitObj = {
+                        id: hit.id,
+                        user_id: hit.user_id,
+                        hashed_ip: hit.hashed_ip,
+                        created_at: hit.created_at
+                    };
+                    data.push(hitObj);
+                }
+            
+                success(callback, { body: { hits: data } });
 
-    success(callback, { body: { hits: data } });
-};
+                break;
+            }
+
+            case 'last_hour': {
+
+                const hits = await getCardHitsByID(user_id, 'last_hour');
+                const data = []
+            
+                for (let hit of hits) {
+                    const hitObj = {
+                        id: hit.id,
+                        user_id: hit.user_id,
+                        hashed_ip: hit.hashed_ip,
+                        created_at: hit.created_at
+                    };
+                    data.push(hitObj);
+                }
+            
+                success(callback, { body: { hits: data } });
+
+                break;
+            }
+
+            case 'last_30_days': {
+
+                const hits = await getCardHitsByID(user_id, 'last_30_days');
+                const data = []
+            
+                for (let hit of hits) {
+                    const hitObj = {
+                        id: hit.id,
+                        user_id: hit.user_id,
+                        hashed_ip: hit.hashed_ip,
+                        created_at: hit.created_at
+                    };
+                    data.push(hitObj);
+                }
+            
+                success(callback, { body: { hits: data } });
+
+                break;
+            }
+            case 'month': {
+
+                const hits = await getCardHitsByID(user_id, 'month');
+                const data = []
+            
+                for (let hit of hits) {
+                    const hitObj = {
+                        id: hit.id,
+                        user_id: hit.user_id,
+                        hashed_ip: hit.hashed_ip,
+                        created_at: hit.created_at
+                    };
+                    data.push(hitObj);
+                }
+            
+                success(callback, { body: { hits: data } });
+
+                break;
+            }
+
+            case 'week': {
+
+                const hits = await getCardHitsByID(user_id, 'week');
+                const data = []
+            
+                for (let hit of hits) {
+                    const hitObj = {
+                        id: hit.id,
+                        user_id: hit.user_id,
+                        hashed_ip: hit.hashed_ip,
+                        created_at: hit.created_at
+                    };
+                    data.push(hitObj);
+                }
+            
+                success(callback, { body: { hits: data } });
+
+                break;
+            }
+        }
+    });
+}
