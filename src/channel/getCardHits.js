@@ -2,7 +2,6 @@ import {fail, success} from "../response/Response.js";
 import Codes from "../response/Codes.js";
 import { getCardHitsByID } from "../db/CardHitQuerries.js";
 import authedChannel from "./generic/authedChannel.js";
-import {time} from "locutus/php/datetime/index.js";
 
 export default (socket, body, callback) => {
     authedChannel(socket, body, callback, async (user) => {
@@ -15,7 +14,7 @@ export default (socket, body, callback) => {
         let timespan = body.timespan;
         let user_id = user.id;
 
-        const allowedTimes = ["today", "last_24_hours", "last_hour", "last_hour", "last_30_days", "month", "week"];
+        const allowedTimes = ['total', 'last_minute', 'last_five_minutes', 'last_fifteen_minutes', 'last_hour', 'last_7_days', 'last_24_hours', 'today', 'week', 'month', 'year', 'last_30_days'];
 
         if (allowedTimes.includes(timespan)) {
             const hits = await getCardHitsByID(user_id, timespan);

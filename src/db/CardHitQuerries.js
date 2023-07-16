@@ -20,7 +20,6 @@ function getTimeDifference(strTime) {
       case "last_24_hours":
         return Math.floor(Date.now() / 1000) - 86400;
       case "today":
-      case "day":
         return Math.floor(new Date().setHours(0, 0, 0, 0) / 1000);
       case "week":
         const monday = new Date();
@@ -43,7 +42,7 @@ function getTimeDifference(strTime) {
 
 export async function getCardHitsByID(user_id, timespan, callback = () => {}) {
     return new Promise((resolve, reject) => {
-      const sql = 'SELECT * FROM hits WHERE user_id = ?';
+      let sql = 'SELECT * FROM hits WHERE user_id = ?';
       const params = [user_id];
   
       if (timespan) {
