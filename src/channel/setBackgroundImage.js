@@ -5,41 +5,32 @@ import Codes from "../response/Codes.js";
 import {fail, success} from "../response/Response.js";
 
 import config from "../../config.json" assert { type: "json" };
+import authedChannel from "./generic/authedChannel.js";
 
 const documentRoot = config.upload_directory;
 
-export default async (socket, body, callback) => {
+export default (socket, body, callback) => {
 
-    if (!body.token) {
-        fail(callback, Codes.InvalidToken);
-        return;
-    }
+    authedChannel(socket, body, callback, async (user) => {
+        const username = user.name;
 
-    const usersWithToken = await getUsersWithToken(body.token);
-
-    if (usersWithToken <= 0) {
-        fail(callback, Codes.InvalidToken);
-        return;
-    }
-    const user = usersWithToken[0];
-    const username = user.name;
-
-    if (!body.image) {
-        fail(callback, Codes.ServerError)
-        return;
-    }
-
-    const imageData = body.image;
-    const imageFile = Buffer.from(imageData, 'base64');
-
-    fs.writeFile(`${documentRoot}/bg_${md5(username.toLowerCase())}.png`, imageFile, err => {
-        if (err) {
+        if (!body.image) {
             fail(callback, Codes.ServerError)
-            console.error(err);
             return;
         }
 
-        success(callback, Codes.Success)
+        const imageData = body.image;
+        const imageFile = Buffer.from(imageData, 'base64');
+
+        fs.writeFile(`${documentRoot}/bg_${md5(username.toLowerCase())}.png`, imageFile, err => {
+            if (err) {
+                fail(callback, Codes.ServerError)
+                console.error(err);
+                return;
+            }
+
+            success(callback, Codes.Success)
+        });
     });
 
 }

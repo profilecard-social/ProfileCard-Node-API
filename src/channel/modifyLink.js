@@ -4,6 +4,7 @@ import Codes from "../response/Codes.js";
 import {createLink, deleteLink, updateLinkByUsername} from "../db/LinkUpdates.js";
 
 export default (socket, body, callback) => {
+
     authedChannel(socket, body, callback, async (user) => {
 
         if (!body.action) {

@@ -1,8 +1,9 @@
 import {fail, success} from "../response/Response.js";
 import Codes from "../response/Codes.js";
 import { getCardHitsByID } from "../db/CardHitQuerries.js";
+import authedChannel from "./generic/authedChannel.js";
 
-export default async (socket, body, callback) => {
+export default (socket, body, callback) => {
     authedChannel(socket, body, callback, async (user) => {
 
         if (!body.timespan && !body.user_id) {

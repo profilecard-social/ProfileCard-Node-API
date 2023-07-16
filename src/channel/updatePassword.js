@@ -3,42 +3,35 @@ import {fail, success} from "../response/Response.js";
 import Codes from "../response/Codes.js";
 import {comparePassword, generateNewToken, generatePasswordHash} from "../util/Encryption.js";
 import {updateUserParam} from "../db/UserUpdates.js";
+import authedChannel from "./generic/authedChannel.js";
 
-export default async (socket, body, callback) => {
+export default (socket, body, callback) => {
 
-    if (!body.token) {
-        fail(callback, Codes.InvalidToken);
-        return;
-    }
+    authedChannel(socket, body, callback, async (user) => {
 
-    const usersWithToken = await getUsersWithToken(body.token);
+        const currentPassword = body.currentPassword;
+        const newPassword = body.newPassword;
 
-    if (usersWithToken <= 0) {
-        fail(callback, Codes.InvalidToken);
-        return;
-    }
-    const user = usersWithToken[0];
+        if (!currentPassword || !newPassword) {
+            fail(callback, Codes.InsufficientCredentials);
+            return;
+        }
 
-    const currentPassword = body.currentPassword;
-    const newPassword = body.newPassword;
+        if (!comparePassword(currentPassword, user.passwordHash)) {
+            fail(callback, Codes.WrongCurrentPassword);
+            return;
+        }
 
-    if (!currentPassword || !newPassword) {
-        fail(callback, Codes.InsufficientCredentials);
-        return;
-    }
+        const newPasswordHash = generatePasswordHash(newPassword);
 
-    if (!comparePassword(currentPassword, user.passwordHash)) {
-        fail(callback, Codes.WrongCurrentPassword);
-        return;
-    }
+        if (comparePassword(currentPassword, newPasswordHash)) {
+            fail(callback, Codes.PasswordsCantMatch);
+            return;
+        }
 
-    const newPasswordHash = generatePasswordHash(newPassword);
+        await updateUserParam("token", body.token, "passwordHash", newPasswordHash);
+        success(callback, Codes.Success);
 
-    if (comparePassword(currentPassword, newPasswordHash)) {
-        fail(callback, Codes.PasswordsCantMatch);
-        return;
-    }
+    });
 
-    await updateUserParam("token", body.token, "passwordHash", newPasswordHash);
-    success(callback, Codes.Success);
 }

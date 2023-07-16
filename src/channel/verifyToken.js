@@ -19,5 +19,7 @@ export default async (socket, body, callback) => {
 
     success(callback, Codes.Success);
 
+    console.log("Verified user: " + usersWithToken[0].name);
+
     await updateUserParam("token", body.token, "last_seen_at", Math.floor(Date.now() / 1000))
 }

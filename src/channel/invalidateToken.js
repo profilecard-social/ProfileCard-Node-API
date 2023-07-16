@@ -3,23 +3,17 @@ import {fail, success} from "../response/Response.js";
 import Codes from "../response/Codes.js";
 import {updateUserParam} from "../db/UserUpdates.js";
 import {generateNewToken} from "../util/Encryption.js";
+import authedChannel from "./generic/authedChannel.js";
 
-export default async (socket, body, callback) => {
+export default (socket, body, callback) => {
 
-    if (!body.token) {
-        fail(callback, Codes.InvalidToken);
-        return;
-    }
+    authedChannel(socket, body, callback, async (user) => {
 
-    const usersWithToken = await getUsersWithToken(body.token);
+        const newToken = generateNewToken();
 
-    if (usersWithToken <= 0) {
-        fail(callback, Codes.InvalidToken);
-        return;
-    }
+        await updateUserParam("token", body.token, "token", newToken);
+        success(callback, Codes.Success);
 
-    const newToken = generateNewToken();
+    });
 
-    await updateUserParam("token", body.token, "token", newToken);
-    success(callback, Codes.Success);
 }
