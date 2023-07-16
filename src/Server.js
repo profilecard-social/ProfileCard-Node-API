@@ -16,10 +16,12 @@ import setBackgroundImage from "./channel/setBackgroundImage.js";
 import removeBackgroundImage from "./channel/removeBackgroundImage.js";
 import getCardHits from "./channel/getCardHits.js";
 
-// Config loading
-import config from "../config.json" assert { type: "json" };
 import getLinks from "./channel/getLinks.js";
 import modifyLink from "./channel/modifyLink.js";
+import getReferrer from "./channel/getReferrer.js";
+
+// Config loading
+import config from "../config.json" assert { type: "json" };
 
 // Init database
 export const mysql = createPool(config.mysql);
@@ -59,6 +61,7 @@ io.on('connect', socket => {
   socket.on('setBackgroundImage', (body, callback) => setBackgroundImage(socket, body, callback));
   socket.on('removeBackgroundImage', (body, callback) => removeBackgroundImage(socket, body, callback));
   socket.on('getCardHits', (body, callback) => getCardHits(socket, body, callback));
+  socket.on('getReferrer', (body, callback) => getReferrer(socket, body, callback));
 
 });
 
