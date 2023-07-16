@@ -73,8 +73,7 @@ export async function getLinkHitsByID(linkid, timespan, callback = () => { }) {
                 fail(callback, Codes.ServerError);
                 return;
             }
-
-            resolve(results);
+            resolve(results.length);
         });
     });
 }

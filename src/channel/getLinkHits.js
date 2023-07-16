@@ -1,7 +1,7 @@
-import {fail, success} from "../response/Response.js";
+import { fail, success } from "../response/Response.js";
 import Codes from "../response/Codes.js";
 import authedChannel from "./generic/authedChannel.js";
-import { getLinkHitsByID } from "../db/LinkQuerries.js";
+import { getLinkHitsByID, getLinksByUsername } from "../db/LinkQuerries.js";
 
 export default (socket, body, callback) => {
 
@@ -12,11 +12,11 @@ export default (socket, body, callback) => {
         let count = 0;
 
         for (let link of links) {
-            count += getLinkHitsByID(link.linkid);
+            const hitsCount = await getLinkHitsByID(link.id);
+            count += hitsCount;
         }
-
+        
         success(callback, { body: { links: count } });
-
     });
 
 };
