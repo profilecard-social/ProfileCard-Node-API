@@ -22,6 +22,8 @@ import getReferrer from "./channel/getReferrer.js";
 
 // Config loading
 import config from "../config.json" assert { type: "json" };
+import getLinkHitsByID from "./channel/getLinkHitsByID.js";
+import getLinkHits from "./channel/getLinkHits.js";
 
 // Init database
 export const mysql = createPool(config.mysql);
@@ -62,6 +64,8 @@ io.on('connect', socket => {
   socket.on('removeBackgroundImage', (body, callback) => removeBackgroundImage(socket, body, callback));
   socket.on('getCardHits', (body, callback) => getCardHits(socket, body, callback));
   socket.on('getReferrer', (body, callback) => getReferrer(socket, body, callback));
+  socket.on('getLinkHitsByID', (body, callback) => getLinkHitsByID(socket, body, callback));
+  socket.on('getLinkHits', (body, callback) => getLinkHits(socket, body, callback));
 
 });
 
