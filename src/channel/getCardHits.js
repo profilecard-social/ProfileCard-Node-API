@@ -6,13 +6,13 @@ import authedChannel from "./generic/authedChannel.js";
 export default (socket, body, callback) => {
     authedChannel(socket, body, callback, async (user) => {
 
-        if (!body.timespan && !body.user_id) {
+        if (!body.timespan) {
             fail(callback, Codes.ServerError)
             return;
         }
 
         let timespan = body.timespan;
-        let user_id = body.user_id;
+        let user_id = user.id;
 
         switch (timespan) {
             case 'today': {
