@@ -8,7 +8,7 @@ export default (socket, body, callback) => {
     authedChannel(socket, body, callback, async (user) => {
 
         if (!body.action) {
-            fail(callback, Codes.ServerError)
+            fail(callback, Codes.WrongArguments)
             return;
         }
 
@@ -18,7 +18,7 @@ export default (socket, body, callback) => {
             case 'create': {
 
                 if (!user.name || !body.name || !body.url) {
-                    fail(callback, Codes.ServerError);
+                    fail(callback, Codes.WrongArguments);
                     return;
                 }
 
@@ -30,7 +30,7 @@ export default (socket, body, callback) => {
             case 'delete': {
 
                 if (!user.name || body.id === undefined) {
-                    fail(callback, Codes.ServerError);
+                    fail(callback, Codes.WrongArguments);
                     return;
                 }
 
@@ -42,7 +42,7 @@ export default (socket, body, callback) => {
             case 'edit': {
 
                 if (!user.name || body.id === undefined || !body.name || !body.url || body.sortId === undefined) {
-                    fail(callback, Codes.ServerError);
+                    fail(callback, Codes.WrongArguments);
                     return;
                 }
 

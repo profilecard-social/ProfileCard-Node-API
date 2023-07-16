@@ -16,7 +16,7 @@ export default async (socket, body, callback) => {
         const username = user.name;
 
         if (!body.image) {
-            fail(callback, Codes.ServerError)
+            fail(callback, Codes.WrongArguments)
             return;
         }
 

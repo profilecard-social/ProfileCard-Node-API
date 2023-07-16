@@ -23,4 +23,5 @@ export default {
     FileNotImage: { code: 420, message: "File not an image" },
     PasswordsCantMatch: { code: 421, message: "Current and new password matches"},
     InsufficientCredentials: { code: 422, message: "Insufficient Credentials" },
+    WrongArguments: { code: 423, message: "Wrong Arguments" },
 }

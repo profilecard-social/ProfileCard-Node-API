@@ -12,7 +12,7 @@ export default async (socket, body, callback) => {
         const value = body.value;
 
         if (!key || !value) {
-            fail(callback, Codes.ServerError);
+            fail(callback, Codes.WrongArguments);
             return;
         }
 
