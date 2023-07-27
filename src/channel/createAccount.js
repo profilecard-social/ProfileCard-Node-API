@@ -23,7 +23,7 @@ export default async (socket, body, callback) => {
         return;
     }
 
-    if ((await getUsersWithEmail(username, callback)).length > 0) {
+    if ((await getUsersWithEmail(email, callback)).length > 0) {
         fail(callback, Codes.EmailTaken);
         return;
     }
