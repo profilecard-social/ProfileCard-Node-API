@@ -16,8 +16,10 @@ export default (socket, body, callback) => {
     authedChannel(socket, body, callback, async (user) => {
 
         const currentPassword = body.currentPassword;
-        const newName = body.newName;
+        let newName = body.newName;
         const username = user.name;
+
+        newName = newName.replaceAll(' ', '');
 
         if (!currentPassword) {
             fail(callback, Codes.InsufficientCredentials);
@@ -33,23 +35,26 @@ export default (socket, body, callback) => {
             fail(callback, Codes.UsernameTaken);
             return;
         }
-
-
+        
         const links = await getLinksByUsername(user.name);
 
         for (let link of links) {
             await updateUsernameByLinkID(newName, link.id, callback);
         }
 
-        fs.rename(`${documentRoot}/${md5(username.toLowerCase())}.png`,  `${documentRoot}/${md5(newName.toLowerCase())}.png`, err => {
-            if (err) {
-                fail(callback, Codes.ServerError)
-                console.error(err);
-                return;
+        fs.stat(`${documentRoot}/${md5(username.toLowerCase())}.png`, function(err, stat) {
+            if (err == null) {
+                fs.rename(`${documentRoot}/${md5(username.toLowerCase())}.png`,  `${documentRoot}/${md5(newName.toLowerCase())}.png`, err => {
+                    if (err) {
+                        fail(callback, Codes.ServerError)
+                        console.error(err);
+                        return;
+                    }        
+                });
             }
+          });
 
-            success(callback, Codes.Success)
-        });
+      
 
         await updateUserParam("token", body.token, "name", newName);
         success(callback, Codes.Success);
