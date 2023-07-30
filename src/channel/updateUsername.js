@@ -8,6 +8,7 @@ import { getLinksByUsername } from "../db/LinkQuerries.js";
 import { updateUsernameByLinkID } from "../db/LinkUpdates.js";
 import config from "../../config.json" assert { type: "json" };
 import md5 from "md5";
+import { getUsersWithName } from "../db/UserQueries.js";
 
 const documentRoot = config.upload_directory;
 export default (socket, body, callback) => {
@@ -25,6 +26,11 @@ export default (socket, body, callback) => {
 
         if (!comparePassword(currentPassword, user.passwordHash)) {
             fail(callback, Codes.WrongCurrentPassword);
+            return;
+        }
+
+        if ((await getUsersWithName(newName, callback)).length > 0) {
+            fail(callback, Codes.UsernameTaken);
             return;
         }
 
