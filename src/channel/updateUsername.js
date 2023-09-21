@@ -42,9 +42,9 @@ export default (socket, body, callback) => {
             await updateUsernameByLinkID(newName, link.id, callback);
         }
 
-        fs.stat(`${documentRoot}/${md5(username.toLowerCase())}.png`, function(err, stat) {
+        fs.stat(`${documentRoot}/${md5(username.toLowerCase())}.webp`, function(err, stat) {
             if (err == null) {
-                fs.rename(`${documentRoot}/${md5(username.toLowerCase())}.png`,  `${documentRoot}/${md5(newName.toLowerCase())}.png`, err => {
+                fs.rename(`${documentRoot}/${md5(username.toLowerCase())}.webp`,  `${documentRoot}/${md5(newName.toLowerCase())}.webp`, err => {
                     if (err) {
                         fail(callback, Codes.ServerError)
                         console.error(err);

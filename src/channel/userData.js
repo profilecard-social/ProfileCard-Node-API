@@ -16,24 +16,24 @@ export default (socket, body, callback) => {
     try {
         authedChannel(socket, body, callback, async (user) => {
             const nameHash = md5(user.name.toLowerCase());
-            const profilePicturePath = `${uploadDirectory}/${nameHash}.png`;
-            const backgroundImagePath = `${uploadDirectory}/bg_${nameHash}.png`;
+            const profilePicturePath = `${uploadDirectory}/${nameHash}.webp`;
+            const backgroundImagePath = `${uploadDirectory}/bg_${nameHash}.webp`;
     
             let profilePicture;
             let backgroundImage;
     
             if (fs.existsSync(profilePicturePath)) {
-                profilePicture = `${accessPath}/${nameHash}.png`;
-            } else if (fs.existsSync(`${uploadDirectory}/${user.id}.png`)) {
-                profilePicture = `${accessPath}/${user.id}.png`;
+                profilePicture = `${accessPath}/${nameHash}.webp`;
+            } else if (fs.existsSync(`${uploadDirectory}/${user.id}.webp`)) {
+                profilePicture = `${accessPath}/${user.id}.webp`;
             } else {
-                profilePicture = `${accessPath}/default.png`;
+                profilePicture = `${accessPath}/default.webp`;
             }
     
             if (fs.existsSync(backgroundImagePath)) {
-                backgroundImage = `${accessPath}/bg_${nameHash}.png`;
+                backgroundImage = `${accessPath}/bg_${nameHash}.webp`;
             }  else {
-                backgroundImage = `${accessPath}/bg_default.png`;
+                backgroundImage = `${accessPath}/bg_default.webp`;
             }
     
             const data = {

@@ -11,7 +11,7 @@ export default (socket, body, callback) => {
 
     authedChannel(socket, body, callback, async (user) => {
         const username = user.name;
-        fs.unlink(`${documentRoot}/bg_${md5(username.toLowerCase())}.png`, err => {
+        fs.unlink(`${documentRoot}/bg_${md5(username.toLowerCase())}.webp`, err => {
             if (err) {
                 fail(callback, Codes.ServerError);
                 console.error(err);

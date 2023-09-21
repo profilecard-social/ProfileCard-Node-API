@@ -23,7 +23,7 @@ export default async (socket, body, callback) => {
         const imageData = body.image;
         const imageFile = Buffer.from(imageData, 'base64');
 
-        fs.writeFile(`${documentRoot}/${md5(username.toLowerCase())}.png`, imageFile, err => {
+        fs.writeFile(`${documentRoot}/${md5(username.toLowerCase())}.webp`, imageFile, err => {
             if (err) {
                 fail(callback, Codes.ServerError)
                 console.error(err);
