@@ -2,18 +2,13 @@
   "name": "profilecard-socket-api",
   "type": "module",
   "scripts": {
-    "devstart": "node --use-strict ./src/Server.js",
-    "serverstart": "pm2 start ./src/Server.js --name js-api",
-    "serverstop": "pm2 stop js-api",
-    "serverrestart": "pm2 restart js-api",
-    "serverdelete": "pm2 delete js-api"
+    "devstart": "node --use-strict ./src/Server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "locutus": "^2.0.16",
     "md5": "^2.3.0",
     "mysql2": "^3.5.0",
-    "pm2": "^5.3.0",
     "socket.io": "^4.6.2"
   },
   "devDependencies": {
