@@ -45,6 +45,7 @@ export default async (socket, body, callback) => {
 
     await updateUserParam("name", username, "theme", 1, callback);
     await updateUserParam("name", username, "lang", "en", callback);
+    await updateUserParam("name", username, "last_seen_at", Math.floor(Date.now() / 1000))
     success(callback, { body: { token: token } });
 
 }
