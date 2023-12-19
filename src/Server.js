@@ -26,6 +26,8 @@ import getLinkHitsByID from "./channel/getLinkHitsByID.js";
 import getLinkHits from "./channel/getLinkHits.js";
 import updateUsername from "./channel/updateUsername.js";
 import getLineChartHits from "./channel/getLineChartHits.js";
+import createMyBlogPost from "./channel/createMyBlogPost.js";
+import getMyBlogPosts from "./channel/getMyBlogPosts.js";
 
 // Init database
 export const mysql = createPool(config.mysql);
@@ -70,6 +72,8 @@ io.on('connect', socket => {
   socket.on('getLinkHits', (body, callback) => getLinkHits(socket, body, callback));
   socket.on('updateUsername', (body, callback) => updateUsername(socket, body, callback));
   socket.on('getLineChartHits', (body, callback) => getLineChartHits(socket, body, callback));
+  socket.on('createMyBlogPost', (body, callback) => createMyBlogPost(socket, body, callback));
+  socket.on('getMyBlogPosts', (body, callback) => getMyBlogPosts(socket, body, callback));
 
 });
 
