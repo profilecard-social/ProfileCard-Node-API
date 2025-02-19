@@ -5,7 +5,7 @@
     "devstart": "node --use-strict ./src/Server.js"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.2",
     "locutus": "^2.0.16",
     "md5": "^2.3.0",
     "mysql2": "^3.9.2",
